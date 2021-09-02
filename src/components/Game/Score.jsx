@@ -1,10 +1,13 @@
 import React from 'react';
+import { Box, Typography } from '@material-ui/core'
 
 const Score = (props) => {
   return (
-    <div>
-      {props.score}
-    </div>
+    <Box>
+      <Typography variant="h6">
+        {props.score}
+      </Typography>
+    </Box>
   )
 }
 

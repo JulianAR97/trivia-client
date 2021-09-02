@@ -1,12 +1,21 @@
 import React from 'react';
+import { Box, Typography, makeStyles } from '@material-ui/core'
+
+const useStyles = makeStyles(theme => ({
+  box: {
+    textAlign: 'center',
+    margin: '30px 0px'
+  }
+}))
 
 const Question = (props) => {
-  console.log('here')
-  console.log(props)
+  const classes = useStyles()
   return (
-    <div>
-      {props.question}
-    </div>
+    <Box className={classes.box}>
+      <Typography variant="h5">
+        {props.question}
+      </Typography>
+    </Box>
   )
 }
 
