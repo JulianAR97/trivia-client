@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Grid, makeStyles } from '@material-ui/core'
-import Question from 'components/Question'
-import Answer from 'components/Answer'
-import Score from 'components/Score'
-import QuestionCount from 'components/QuestionCount'
+import Question from 'components/Game/Question'
+import Answer from 'components/Game/Answer'
+import Score from 'components/Game/Score'
+import QuestionCount from 'components/Game/QuestionCount'
 import { shuffle } from 'Helpers'
 
 const TRIVIA_URL = 'https://opentdb.com/api.php'
@@ -42,6 +42,8 @@ const Game = (props) => {
       <Answer key={i} answer={answer} handleClick={checkAnswer}/>
     ))
   }
+
+  
 
   // Event Handlers
 
