@@ -10,7 +10,7 @@ export const shuffle = (array) => {
   let currentIndex = array.length
   let randomIndex;
 
-  while (currentIndex != 0) {
+  while (currentIndex !== 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
     currentIndex--;
 
@@ -18,4 +18,26 @@ export const shuffle = (array) => {
   } 
 
   return array
+}
+
+
+export const sanitizeQuestions = (questions) => {
+  const dictionary = {
+    "&quot;": '"',
+    "&#039;": "'",
+    "&ntilde:":  "ñ",
+    "&amp;": "&"
+
+  }
+
+  questions.forEach(q => {
+    for (let k in dictionary) {
+      q.question = q.question.replaceAll(k, dictionary[k])
+      q.correct_answer = q.correct_answer.replace(k, dictionary[k])
+      q.incorrect_answers.map(incorret => incorret.replace(k, dictionary[k]))
+    }
+  })
+
+  return questions
+
 }
