@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Container, Grid, makeStyles, useMediaQuery, useTheme } from '@material-ui/core'
+import { Box, Grid, makeStyles, useMediaQuery, useTheme } from '@material-ui/core'
 import Question from 'components/Game/Question'
 import Answer from 'components/Game/Answer'
 import Score from 'components/Game/Score'
 import QuestionCount from 'components/Game/QuestionCount'
-import { shuffle } from 'Helpers'
+import { wait, shuffle, sanitizeQuestions } from 'Helpers'
 
 const TRIVIA_URL = 'https://opentdb.com/api.php'
 
@@ -34,6 +34,7 @@ const Game = (props) => {
       .then(res => res.filter(r => r.incorrect_answers.length === 3))
       // keep first ten questions
       .then(res => res.slice(0, 10))
+      .then(res => sanitizeQuestions(res))
       .then(res => setQuestions(res))
       .catch(err => alert(err))
   }
@@ -57,7 +58,13 @@ const Game = (props) => {
 
     // map the answers to answer components
     return shuffled.map((answer, i) => (
-      <Answer key={i} answer={answer} handleClick={checkAnswer}/>
+      <Answer 
+        key={i} 
+        answer={answer} 
+        handleClick={checkAnswer} 
+  
+        correct={questions[questionCount].correct_answer}
+      />
     ))
   }
 
@@ -69,7 +76,8 @@ const Game = (props) => {
    * its answer data as the argument
    * @param {string} answer 
    */
-  const checkAnswer = (answer) => {
+  const checkAnswer = async (answer) => {
+ 
     if (answer === questions[questionCount].correct_answer) {
       setScore(score => score + 1)
     }
@@ -78,13 +86,14 @@ const Game = (props) => {
     } else {
       setQuestionCount(questionCount => questionCount + 1)
     }
-
+    
   }
   
   return (
-    <div>
-      {questions[0] ? 
-        <Container>
+    <Grid item xs={12}>
+
+      {questions[0] ?
+        <>
           <Box className={classes.box}>
             <Score score={score} />
             {/* add 1 to questionCount to convert from array notation to counting notation */}
@@ -95,11 +104,12 @@ const Game = (props) => {
           <Grid container spacing={isSmall ? 2 : 4}>
             { renderAnswers() }
           </Grid>
-        </Container>
+        </>
       : 
-        'loading...'
-      }
-    </div>
+      'loading...'
+    }
+    
+    </Grid>
   )
 }
 
