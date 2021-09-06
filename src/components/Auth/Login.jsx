@@ -1,17 +1,31 @@
 import React, { useRef, useState } from 'react';
-import { Button, Card, CardContent, FormControl, Input, InputLabel, Typography } from '@material-ui/core'
+import { Button, Card, CardContent, FormControl, IconButton, Input, InputAdornment, InputLabel, Typography, makeStyles } from '@material-ui/core'
+import { Visibility, VisibilityOff } from '@material-ui/icons'
 import { Alert } from '@material-ui/lab'
 import { useAuth } from '../../contexts/AuthContext'
-import { useHistory } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
+const useStyles = makeStyles((theme) => ({
+  card: {
+    maxWidth: '400px'
+  },
+  container: {
+    display: 'flex',
+    minHeight: '100vh',
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+}))
 const Login = () => {
   // useRef to keep track of form variables
   const emailRef = useRef();
   const passwordRef = useRef();
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { login } = useAuth()
+  const [showPassword, setShowPassword] = useState(false)
+  const classes = useStyles()
   const history = useHistory()
+  const { login } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +33,8 @@ const Login = () => {
     try {
       setError('')
       setLoading(true)
-      await login(emailRef.current.lastChild.value, passwordRef.current.lastChild.value)
+     
+      await login(emailRef.current.children[0].value, passwordRef.current.children[0].value)
       history.push('/')
     } catch (err){
       console.log(err)
@@ -31,8 +46,8 @@ const Login = () => {
   }
 
   return (
-    <>
-      <Card>
+    <div className={classes.container}>
+      <Card className={classes.card}>
    
         <CardContent>
 
@@ -42,22 +57,39 @@ const Login = () => {
          
           {error && <Alert severity="error">{error}</Alert>}
           <form onSubmit={handleSubmit}>
-            <FormControl>
+            <FormControl fullWidth>
               <InputLabel htmlFor="email">Email</InputLabel>
               <Input id="email" ref={emailRef} required/>
             </FormControl>
 
-            <FormControl>
+            <FormControl fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
-              <Input id="password" type="password" ref={passwordRef} required/>
+              <Input 
+                id="password" 
+                type={showPassword ? 'text' : 'password'}
+                ref={passwordRef}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => setShowPassword(!showPassword)}>
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                } 
+                required
+              />
+            </FormControl>
+            <FormControl fullWidth>
+
+              <Button type="submit" disabled={loading}>Login</Button>
             </FormControl>
 
-            <Button type="submit" disabled={loading}>Login</Button>
-            
+            <Typography variant="subtitle2">
+              Need an account? <Link to="/signup">Sign up</Link>
+            </Typography>
           </form>
         </CardContent>
       </Card>
-    </>
+    </div>
   );
 }
 
