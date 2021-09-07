@@ -4,6 +4,7 @@ import { Visibility, VisibilityOff } from '@material-ui/icons'
 import { Alert } from '@material-ui/lab'
 import { useAuth } from 'contexts/AuthContext'
 import { Link, useHistory } from 'react-router-dom'
+import Google from 'icons/google'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -15,6 +16,13 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100vh',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  iconButton: {
+    display: 'inline-flex'
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
   }
 }))
 const Signup = () => {
@@ -27,7 +35,7 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false)
   const classes = useStyles()
   const history = useHistory()
-  const { signup } = useAuth()
+  const { signup, googleAuth } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,6 +57,21 @@ const Signup = () => {
 
     setLoading(false)
     
+  }
+
+  const handleGoogle = async (e) => {
+    e.preventDefault();
+
+    try {
+      setError('')
+      setLoading(true)
+
+      await googleAuth()
+      history.push('/')
+    } catch (err) {
+      console.log(err)
+      setError('Failed to sign in with Google')
+    }
   }
 
   return (
@@ -101,6 +124,12 @@ const Signup = () => {
             
             <FormControl fullWidth>
               <Button type="submit" disabled={loading}>Sign Up</Button>
+            </FormControl>
+
+            <FormControl className={classes.buttonRow} fullWidth>
+              <IconButton className={classes.iconButton} onClick={handleGoogle}>
+                <Google />
+              </IconButton>
             </FormControl>
             
             <Typography variant="subtitle2">
