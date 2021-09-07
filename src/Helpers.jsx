@@ -41,3 +41,20 @@ export const sanitizeQuestions = (questions) => {
   return questions
 
 }
+
+export const addUserAnswer = (questions) => {
+  questions.forEach(q => q.userAnswer = '')
+
+  return questions
+}
+
+export const organizeQuestions = (questions) => {
+  questions = questions
+    .filter(q => q.type === 'multiple')
+    .slice(0, 10)
+  
+  sanitizeQuestions(questions)
+  addUserAnswer(questions)
+  console.log(questions)
+  return questions
+}
