@@ -91,7 +91,7 @@ const Game = (props) => {
   }
   
   return (
-    <Grid item xs={12}>
+    <Grid xs={12}>
 
       {questions[0] ?
         <>
