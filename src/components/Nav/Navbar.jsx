@@ -34,13 +34,21 @@ const Navbar = (props) => {
     }
   }
 
+  const handleLogoClick = (e) => {
+    if (history.location.pathname === '/') {
+      window.location.reload()
+    } else {
+      history.push('/')
+    }
+  }
+
   return (
     <AppBar position="static">
       <Toolbar>
         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" className={classes.title} onClick={() => history.push('/')}>
+        <Typography variant="h6" className={classes.title} onClick={handleLogoClick}>
           Trivia
         </Typography>
         <Button onClick={handleAuthButton}>
