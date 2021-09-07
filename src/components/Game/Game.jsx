@@ -4,6 +4,7 @@ import Question from 'components/Game/Question'
 import Answer from 'components/Game/Answer'
 import Score from 'components/Game/Score'
 import QuestionCount from 'components/Game/QuestionCount'
+import Final from 'components/Game/Final'
 import { shuffle, organizeQuestions } from 'Helpers'
 
 const TRIVIA_URL = 'https://opentdb.com/api.php'
@@ -20,6 +21,7 @@ const Game = (props) => {
   const [questionCount, setQuestionCount] = useState(0)
   const [score, setScore] = useState(0)
   const [questions, setQuestions] = useState([])
+  const [difficultyCount, setDifficultyCount] = useState(props.difficultyCount)
   const classes = useStyles()
   const theme = useTheme()
 
@@ -78,22 +80,36 @@ const Game = (props) => {
    * @param {string} answer 
    */
   const checkAnswer = async (answer) => {
- 
+    const difficulty = questions[questionCount].difficulty
+    setDifficultyCount(difficultyCount => ({
+      ...difficultyCount, 
+      [difficulty]: {
+        ...difficultyCount[difficulty], 
+        seen: difficultyCount[difficulty].seen + 1 
+      }
+    }))
+
     if (answer === questions[questionCount].correct_answer) {
       setScore(score => score + 1)
+      setDifficultyCount(difficultyCount => ({
+        ...difficultyCount, 
+        [difficulty]: {
+          ...difficultyCount[difficulty], 
+          correct: difficultyCount[difficulty].correct + 1
+        }
+      }))
     }
-    if (questionCount === questions.length - 1) {
-      // render final
-    } else {
-      setQuestionCount(questionCount => questionCount + 1)
-    }
+    
+    setQuestionCount(questionCount => questionCount + 1)
+   
     
   }
   
+  console.log(difficultyCount)
   return (
     <>
 
-      {questions[0] ?
+      {questions[questionCount] ?
         <>
           <Box className={classes.box}>
             <Score score={score} />
@@ -107,11 +123,33 @@ const Game = (props) => {
           </Grid>
         </>
       : 
-      'loading...'
+      
+      questionCount === 0 ? 
+        'loading' 
+      : 
+        <Final score={score} questionCount={questionCount}/>
+      
     }
     
     </>
   )
+}
+
+Game.defaultProps = {
+  difficultyCount: {
+    easy: {
+      seen: 0,
+      correct: 0
+    },
+    medium: {
+      seen: 0,
+      correct: 0
+    },
+    hard: {
+      seen: 0,
+      correct: 0
+    }
+  }
 }
 
 export default Game
