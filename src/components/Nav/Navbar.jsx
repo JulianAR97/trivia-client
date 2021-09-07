@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    cursor: 'pointer',
+    color: '#fff'
   },
 }));
 
@@ -38,8 +40,8 @@ const Navbar = (props) => {
         <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" className={classes.title}>
-          News
+        <Typography variant="h6" className={classes.title} onClick={() => history.push('/')}>
+          Trivia
         </Typography>
         <Button onClick={handleAuthButton}>
           <Typography variant="subtitle2" className={classes.title}>

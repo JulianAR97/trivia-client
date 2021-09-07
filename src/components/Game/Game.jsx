@@ -4,7 +4,7 @@ import Question from 'components/Game/Question'
 import Answer from 'components/Game/Answer'
 import Score from 'components/Game/Score'
 import QuestionCount from 'components/Game/QuestionCount'
-import { wait, shuffle, sanitizeQuestions } from 'Helpers'
+import { shuffle, sanitizeQuestions, addUserAnswer, organizeQuestions } from 'Helpers'
 
 const TRIVIA_URL = 'https://opentdb.com/api.php'
 
@@ -31,10 +31,11 @@ const Game = (props) => {
       .then(res => res.json())
       .then(res => res.results)
       // filter out true / false questions
-      .then(res => res.filter(r => r.incorrect_answers.length === 3))
+      .then(res => organizeQuestions(res))
       // keep first ten questions
-      .then(res => res.slice(0, 10))
-      .then(res => sanitizeQuestions(res))
+      // .then(res => res.slice(0, 10))
+      // .then(res => sanitizeQuestions(res))
+      // .then(res => addUserAnswer(res))
       .then(res => setQuestions(res))
       .catch(err => alert(err))
   }
@@ -62,7 +63,7 @@ const Game = (props) => {
         key={i} 
         answer={answer} 
         handleClick={checkAnswer} 
-  
+        userAnswer={questions[questionCount].userAnswer}
         correct={questions[questionCount].correct_answer}
       />
     ))
