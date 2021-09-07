@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { Button, Card, CardContent, FormControl, IconButton, Input, InputAdornment, InputLabel, Typography, makeStyles } from '@material-ui/core'
-import { Facebook, Visibility, VisibilityOff } from '@material-ui/icons'
+import { Visibility, VisibilityOff } from '@material-ui/icons'
 import { Alert } from '@material-ui/lab'
-import { useAuth } from '../../contexts/AuthContext'
+import { useAuth } from 'contexts/AuthContext'
 import { Link, useHistory } from 'react-router-dom'
 import Google from 'icons/google'
 
@@ -23,10 +23,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  facebook: {
-    // facebook blue
-    color: '#4267B2'
-  }
+
+  
 }))
 
 const Login = () => {
@@ -38,7 +36,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const classes = useStyles()
   const history = useHistory()
-  const { login } = useAuth()
+  const { login, googleAuth } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,6 +54,21 @@ const Login = () => {
 
     setLoading(false)
     
+  }
+
+  const handleGoogle = async (e) => {
+    e.preventDefault();
+
+    try {
+      setError('')
+      setLoading(true)
+
+      await googleAuth()
+      history.push('/')
+    } catch (err) {
+      console.log(err)
+      setError('Failed to sign in with Google')
+    }
   }
 
   return (
@@ -97,11 +110,8 @@ const Login = () => {
             </FormControl>
             
             <FormControl className={classes.buttonRow} fullWidth>
-              <IconButton className={classes.iconButton}>
-                <Facebook className={classes.facebook}/>
-              </IconButton>
-              <IconButton className={classes.iconButton}>
-                <Google style={{width: '18px', height: '18px'}}/>
+              <IconButton className={classes.iconButton} onClick={handleGoogle}>
+                <Google />
               </IconButton>
             </FormControl>
             
