@@ -5,10 +5,20 @@ import Signup from 'components/Auth/Signup'
 import Login from 'components/Auth/Login'
 import { AuthProvider } from 'contexts/AuthContext'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core'
 
-const App = () => { 
+const useStyles = makeStyles((theme) => ({
+  app: {
+    backgroundColor: theme.palette.primary.light,
+    minHeight: '100vh'
+  }
+}))
+
+const App = () => {
+  const classes = useStyles() 
+  
   return (
-    <div className="App">
+    <div className={classes.app}>
       <Router>
         <AuthProvider>
           <Navbar />
