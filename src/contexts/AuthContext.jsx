@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { auth } from 'firebase.js'
+import { auth, googleProvider } from 'firebase.js'
+
 
 const AuthContext = React.createContext()
 
@@ -23,6 +24,10 @@ export const AuthProvider = ({children}) => {
     return auth.signOut()
   }
 
+  const googleAuth = () => {
+    return auth.signInWithPopup(googleProvider)
+  }
+
   useEffect(() => {
     // Firebase listener to notify when user is set
     const unsubscribe = auth.onAuthStateChanged(user => {
@@ -37,6 +42,7 @@ export const AuthProvider = ({children}) => {
 
   const value = {
     currentUser,
+    googleAuth,
     login,
     logout,
     signup,
