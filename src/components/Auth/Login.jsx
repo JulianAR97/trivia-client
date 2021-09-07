@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { Button, Card, CardContent, FormControl, IconButton, Input, InputAdornment, InputLabel, Typography, makeStyles } from '@material-ui/core'
-import { Visibility, VisibilityOff } from '@material-ui/icons'
+import { Facebook, Visibility, VisibilityOff } from '@material-ui/icons'
 import { Alert } from '@material-ui/lab'
 import { useAuth } from '../../contexts/AuthContext'
 import { Link, useHistory } from 'react-router-dom'
+import Google from 'icons/google'
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -14,8 +15,20 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100vh',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  iconButton: {
+    display: 'inline-flex'
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  facebook: {
+    // facebook blue
+    color: '#4267B2'
   }
 }))
+
 const Login = () => {
   // useRef to keep track of form variables
   const emailRef = useRef();
@@ -82,7 +95,16 @@ const Login = () => {
 
               <Button type="submit" disabled={loading}>Login</Button>
             </FormControl>
-
+            
+            <FormControl className={classes.buttonRow} fullWidth>
+              <IconButton className={classes.iconButton}>
+                <Facebook className={classes.facebook}/>
+              </IconButton>
+              <IconButton className={classes.iconButton}>
+                <Google style={{width: '18px', height: '18px'}}/>
+              </IconButton>
+            </FormControl>
+            
             <Typography variant="subtitle2">
               Need an account? <Link to="/signup">Sign up</Link>
             </Typography>
