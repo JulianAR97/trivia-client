@@ -4,17 +4,17 @@ import Question from 'components/Game/Question'
 import Answer from 'components/Game/Answer'
 import Score from 'components/Game/Score'
 import QuestionCount from 'components/Game/QuestionCount'
-import { shuffle, sanitizeQuestions, addUserAnswer, organizeQuestions } from 'Helpers'
+import { shuffle, organizeQuestions } from 'Helpers'
 
 const TRIVIA_URL = 'https://opentdb.com/api.php'
 
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   box: {
     display: 'flex',
     justifyContent: 'space-between',
   }
-})
+}))
 
 const Game = (props) => {
   const [questionCount, setQuestionCount] = useState(0)
@@ -91,7 +91,7 @@ const Game = (props) => {
   }
   
   return (
-    <Grid xs={12}>
+    <>
 
       {questions[0] ?
         <>
@@ -110,7 +110,7 @@ const Game = (props) => {
       'loading...'
     }
     
-    </Grid>
+    </>
   )
 }
 

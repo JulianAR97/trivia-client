@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Container, Grid, makeStyles, useMediaQuery, useTheme } from '@material-ui/core'
+import { Card, Container, makeStyles, useMediaQuery, useTheme } from '@material-ui/core'
 import Game from 'components/Game/Game'
 import Stats from 'components/Stats/Stats'
 
@@ -8,12 +8,9 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100vh',
     justifyContent: 'center',
     alignItems: 'center',
-    
-    
   },
   card: {
-    marginTop: '10px',
-    padding: '20px 10px'
+    marginTop: '20px',
   }
 }))
 
@@ -21,17 +18,14 @@ const Home = (props) => {
   const classes = useStyles()
   const theme = useTheme()
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
-  
+
   return (
-    <Container className={classes.container}>
-      
-        
-        <Stats />
-        
-        {/*Choose cat*/}
-        <Card className={classes.card}>
-          <Game />
-        </Card>
+    <Container className={classes.container}>      
+      <Stats />
+      {/*Choose cat*/}
+      <Card className={classes.card} style={{padding: isSmall ? '10px' : '30px'}}>
+        <Game />
+      </Card>
       
     </Container>
   )
