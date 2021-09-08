@@ -105,7 +105,7 @@ const Game = (props) => {
     
   }
   
-  console.log(difficultyCount)
+ 
   return (
     <>
 
@@ -127,7 +127,7 @@ const Game = (props) => {
       questionCount === 0 ? 
         'loading' 
       : 
-        <Final score={score} questionCount={questionCount}/>
+        <Final score={score} questionCount={questionCount} difficultyCount={difficultyCount}/>
       
     }
     
