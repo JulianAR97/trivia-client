@@ -32,7 +32,8 @@ export const sanitizeQuestions = (questions) => {
     "&eacute;": 'é',
     "&aacute;": 'á',
     "&lt;": "<",
-    "&gt;": ">"
+    "&gt;": ">",
+    
 
   }
 
@@ -40,7 +41,9 @@ export const sanitizeQuestions = (questions) => {
     for (let k in dictionary) {
       q.question = q.question.replaceAll(k, dictionary[k])
       q.correct_answer = q.correct_answer.replace(k, dictionary[k])
-      q.incorrect_answers.map(incorret => incorret.replace(k, dictionary[k]))
+      q.incorrect_answers.forEach((_, i) => {  
+        q.incorrect_answers[i] = q.incorrect_answers[i].replaceAll(k, dictionary[k])
+      })
     }
   })
 
