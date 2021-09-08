@@ -23,7 +23,7 @@ const Home = (props) => {
     <Container className={classes.container}>      
       <Stats />
       {/*Choose cat*/}
-      <Card className={classes.card} style={{padding: isSmall ? '10px' : '30px'}}>
+      <Card className={classes.card} style={{padding: isSmall ? '30px 10px' : '30px'}}>
         <Game />
       </Card>
       
