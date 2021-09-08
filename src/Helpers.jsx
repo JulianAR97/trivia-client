@@ -30,7 +30,9 @@ export const sanitizeQuestions = (questions) => {
     "&ldquo;": '"',
     "&rdquo;": '"',
     "&eacute;": 'é',
-    "&aacute;": 'á'
+    "&aacute;": 'á',
+    "&lt;": "<",
+    "&gt;": ">"
 
   }
 
