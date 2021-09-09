@@ -18,7 +18,7 @@ const Home = (props) => {
   const classes = useStyles()
   const theme = useTheme()
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
-
+  
   return (
     <Container className={classes.container}>      
       <Stats />
