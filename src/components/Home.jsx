@@ -20,8 +20,10 @@ const Home = (props) => {
   const isSmall = useMediaQuery(theme.breakpoints.down('sm'))
   
   return (
-    <Container className={classes.container}>      
-      <Stats />
+    <Container className={classes.container}>
+      <Card className={classes.card} style={{padding: isSmall ? '30px 10px' : '30px'}}>
+        <Stats />
+      </Card>     
       {/*Choose cat*/}
       <Card className={classes.card} style={{padding: isSmall ? '30px 10px' : '30px'}}>
         <Game />
