@@ -2,11 +2,11 @@ import React from 'react';
 import { Box, CircularProgress, Typography } from '@material-ui/core'
 
 const CircularProgressWithLabel = (props) => {
-  const {textValue, ...rest} = props
+  const {value, ...rest} = props
   
   return (
     <Box position="relative" display="inline-flex">
-      <CircularProgress variant="determinate" {...rest} />
+      <CircularProgress variant="determinate" value={Math.max(value, 5)} {...rest} />
       <Box
         top={0}
         left={0}
@@ -18,7 +18,7 @@ const CircularProgressWithLabel = (props) => {
         justifyContent="center"
       >
         <Typography variant="caption" component="div" color={props.color}>
-          {textValue}
+          {`${value}%`}
         </Typography>
       </Box>
     </Box>
