@@ -6,7 +6,7 @@ const CircularProgressWithLabel = (props) => {
   
   return (
     <Box position="relative" display="inline-flex">
-      <CircularProgress variant="determinate" value={Math.max(value, 5)} {...rest} />
+      <CircularProgress variant="determinate" value={value} {...rest} />
       <Box
         top={0}
         left={0}
@@ -18,7 +18,7 @@ const CircularProgressWithLabel = (props) => {
         justifyContent="center"
       >
         <Typography variant="caption" component="div" color={props.color}>
-          {`${value}%`}
+          {props.label}
         </Typography>
       </Box>
     </Box>
