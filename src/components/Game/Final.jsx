@@ -68,7 +68,6 @@ const Final = (props) => {
       return result
     }
   }
-  console.log(props.difficultyCount)
   
   // OnMount, we want to update the stats
   useEffect(() => {

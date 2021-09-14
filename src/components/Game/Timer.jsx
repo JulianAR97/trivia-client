@@ -16,7 +16,6 @@ const Timer = ({ expiryTimestamp }) => {
     restart(expiryTimestamp)
   }, [expiryTimestamp])
 
-  console.log(theme.palette.secondary.main)
   return (
     <CircularProgressWithLabel 
       color={ seconds > 10 ? 'primary' : 'secondary' }

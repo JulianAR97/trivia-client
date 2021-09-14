@@ -66,7 +66,6 @@ export const organizeQuestions = (questions) => {
   
   sanitizeQuestions(questions)
   addUserAnswer(questions)
-  console.log(questions)
   return questions
 }
 

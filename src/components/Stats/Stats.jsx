@@ -48,7 +48,7 @@ const Stats = (props) => {
       setErrors(prevErrors => [...prevErrors, 'Please login to view stats'])
     }
     setLoading(false)
-  }, [currentUser], console.log(Object.keys(stats)))
+  }, [currentUser])
 
   const renderErrors = (errors) => {
     return errors.map((e, i) => (
