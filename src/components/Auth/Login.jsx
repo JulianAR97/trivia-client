@@ -36,7 +36,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const classes = useStyles()
   const history = useHistory()
-  const { login, googleAuth, setProfile } = useAuth()
+  const { login, googleAuth } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,7 +46,6 @@ const Login = () => {
       setLoading(true)
      
       await login(emailRef.current.children[0].value, passwordRef.current.children[0].value)
-      await setProfile()
       history.push('/')
     } catch (err){
       console.log(err)
@@ -65,12 +64,14 @@ const Login = () => {
       setLoading(true)
 
       await googleAuth()
+      
       history.push('/')
     } catch (err) {
       console.log(err)
       setError('Failed to sign in with Google')
     }
   }
+
 
   return (
     <div className={classes.container}>
