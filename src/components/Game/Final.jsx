@@ -95,6 +95,7 @@ const Final = (props) => {
         { /* value must be passed as number between 0 and 100, we pass 5 in if there are 0 correct answers so that progress indicator still shows */ } 
         <CircularProgressWithLabel 
           value={Math.max(Math.round(props.difficultyCount[k].correct / props.difficultyCount[k].seen * 100), 5)}
+          label={`${props.difficultyCount[k].correct} / ${props.difficultyCount[k].seen}`}
           textValue={`${props.difficultyCount[k].correct} / ${props.difficultyCount[k].seen}`} 
           color="secondary" 
         />
@@ -130,7 +131,7 @@ const Final = (props) => {
           <Grid item className={classes.gridItem}>
             <CircularProgressWithLabel 
               value={Math.round((props.score / props.questionCount) * 100)}
-              textValue={`${(props.score / props.questionCount) * 100}%`} 
+              label={`${props.score} / ${props.questionCount}`} 
               color="secondary" 
             />
             <Typography className={classes.typography} variant="h6">
