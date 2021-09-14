@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { AppBar, Avatar, Button, IconButton, Toolbar, Typography, makeStyles } from '@material-ui/core'
+import { AppBar, Avatar, Button, IconButton, Menu, MenuItem, Toolbar, Typography, makeStyles } from '@material-ui/core'
 import { getProfile } from 'actions/Profile'
 import { Menu as MenuIcon} from '@material-ui/icons'
 import { useAuth } from 'contexts/AuthContext'
@@ -18,16 +18,22 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     color: '#fff'
   },
+
+  menu: {
+    marginTop: '10px'
+  }
 }));
 
 
 const Navbar = (props) => {
   const classes = useStyles()
   const [avatar, setAvatar] = useState('')
+  const [anchorEl, setAnchorEl] = useState(null)
   const { currentUser, logout } = useAuth()
   const history = useHistory()
   
   const handleAuthButton = async(e) => {
+    setAnchorEl(null)
     if (currentUser) {
       await logout()
       history.push('/')
@@ -55,9 +61,17 @@ const Navbar = (props) => {
     }
   }
 
-  useEffect(() => {
+  const handleMenuClick = (e) => {
+    setAnchorEl(e.currentTarget)
+  };
+  
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  }
 
-  })
+  const handleProfileClick = (e) => {
+    history.push('/profile')
+  }
 
 
   return (
@@ -70,13 +84,39 @@ const Navbar = (props) => {
           Trivia
         </Typography>
       
-        {currentUser ? <Avatar src={avatar} /> : null }
-      
-        <Button onClick={handleAuthButton}>
-          <Typography variant="subtitle2" className={classes.title}>
-            {currentUser ? 'logout' : 'login'}
-          </Typography>
-        </Button>
+        {currentUser ?
+          
+          <>
+            
+            <IconButton aria-controls="profile-menu" onClick={handleMenuClick}>
+              <Avatar src={avatar} />
+            </IconButton> 
+            
+            
+            <Menu
+              className={classes.menu}
+              id="profile-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleMenuClose}
+            >
+              <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
+              <MenuItem onClick={handleAuthButton}>Logout</MenuItem>
+            </Menu>
+            
+            
+          </>
+
+        :
+
+          <Button onClick={handleAuthButton}>
+            <Typography variant="subtitle2" className={classes.title}>
+              login
+            </Typography>
+          </Button>
+          
+        }
       </Toolbar>
     </AppBar>
   )
