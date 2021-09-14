@@ -3,6 +3,7 @@ import Home from 'components/Home'
 import Navbar from 'components/Nav/Navbar'
 import Signup from 'components/Auth/Signup'
 import Login from 'components/Auth/Login'
+import Profile from 'components/Profile/Profile'
 import { AuthProvider } from 'contexts/AuthContext'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core'
@@ -26,6 +27,7 @@ const App = () => {
             <Route exact path="/" component={Home}/>
             <Route path="/signup" component={Signup} />
             <Route path="/login" component={Login} />
+            <Route path="/profile" component={Profile} />
           </Switch>
         </AuthProvider>
       </Router>
