@@ -28,6 +28,7 @@ export const AuthProvider = ({children}) => {
     return auth.signInWithPopup(googleProvider)
   }
 
+
   useEffect(() => {
     // Firebase listener to notify when user is set
     const unsubscribe = auth.onAuthStateChanged(user => {
@@ -45,8 +46,7 @@ export const AuthProvider = ({children}) => {
     googleAuth,
     login,
     logout,
-    signup,
-
+    signup
   }
 
   return (
