@@ -36,7 +36,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const classes = useStyles()
   const history = useHistory()
-  const { login, googleAuth } = useAuth()
+  const { login, googleAuth, setProfile } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,6 +46,7 @@ const Login = () => {
       setLoading(true)
      
       await login(emailRef.current.children[0].value, passwordRef.current.children[0].value)
+      await setProfile()
       history.push('/')
     } catch (err){
       console.log(err)
