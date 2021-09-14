@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Grid, makeStyles, useMediaQuery, useTheme } from '@material-ui/core'
-import Question from 'components/Game/Question'
 import Answer from 'components/Game/Answer'
-import Score from 'components/Game/Score'
-import QuestionCount from 'components/Game/QuestionCount'
 import Final from 'components/Game/Final'
-import { shuffle, organizeQuestions } from 'Helpers'
+import Question from 'components/Game/Question'
+import QuestionCount from 'components/Game/QuestionCount'
+import Score from 'components/Game/Score'
+import Timer from 'components/Game/Timer'
+import { shuffle, organizeQuestions, addSeconds } from 'Helpers'
 
 const TRIVIA_URL = 'https://opentdb.com/api.php'
 
@@ -19,6 +20,7 @@ const useStyles = makeStyles(theme => ({
 
 const Game = (props) => {
   const [questionCount, setQuestionCount] = useState(0)
+  const [expiryTimestamp, setExpiryTimestamp] = useState(addSeconds(new Date(), 30))
   const [score, setScore] = useState(0)
   const [questions, setQuestions] = useState([])
   const [difficultyCount, setDifficultyCount] = useState(props.difficultyCount)
@@ -32,12 +34,7 @@ const Game = (props) => {
     fetch(`${TRIVIA_URL}?amount=20`)
       .then(res => res.json())
       .then(res => res.results)
-      // filter out true / false questions
       .then(res => organizeQuestions(res))
-      // keep first ten questions
-      // .then(res => res.slice(0, 10))
-      // .then(res => sanitizeQuestions(res))
-      // .then(res => addUserAnswer(res))
       .then(res => setQuestions(res))
       .catch(err => alert(err))
   }
@@ -101,7 +98,7 @@ const Game = (props) => {
     }
     
     setQuestionCount(questionCount => questionCount + 1)
-   
+    setExpiryTimestamp(() => addSeconds(new Date(), 30))
     
   }
   
@@ -113,6 +110,7 @@ const Game = (props) => {
         <>
           <Box className={classes.box}>
             <Score score={score} />
+            <Timer expiryTimestamp={expiryTimestamp} />
             {/* add 1 to questionCount to convert from array notation to counting notation */}
             <QuestionCount questionCount={questionCount + 1} totalQuestions={questions.length} />
           </Box>
