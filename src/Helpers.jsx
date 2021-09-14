@@ -37,8 +37,6 @@ export const sanitizeQuestions = (questions) => {
     "&ograve;": "ò",
     "&iacute;": "í",
     "&uuml;": "ü"
-    
-
   }
 
   questions.forEach(q => {
@@ -70,4 +68,14 @@ export const organizeQuestions = (questions) => {
   addUserAnswer(questions)
   console.log(questions)
   return questions
+}
+
+
+/** 
+ * @param {Object} date date object
+ * @param {Integer} seconds
+ * @return {Object} date object
+*/
+export const addSeconds = (date, seconds) => {
+  return new Date(date.getTime() + seconds * 1000)
 }
