@@ -14,7 +14,8 @@ const app = firebase.initializeApp({
 const firestore = app.firestore()
 
 export const database = {
-  stats: firestore.collection('stats')
+  stats: firestore.collection('stats'),
+  profile: firestore.collection('profile')
 }
 
 export const googleProvider = new firebase.auth.GoogleAuthProvider()
