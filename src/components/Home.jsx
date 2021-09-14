@@ -40,6 +40,7 @@ const Home = (props) => {
       <Card 
         className={classes.card} 
         style={calcCardStyle()}
+        raised
       >
         <Stats />
       </Card>     
@@ -47,6 +48,7 @@ const Home = (props) => {
       <Card 
         className={classes.card} 
         style={calcCardStyle()}
+        raised
       >
         <Game />
       </Card>
