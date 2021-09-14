@@ -29,7 +29,7 @@ const Stats = (props) => {
   const [errors, setErrors] = useState([])
   
   const getStats = async (uid) => {
-    let userStats = await database.stats.get({uid})
+    let userStats = await database.stats.where('userId', '==', uid).get()
     if (userStats.docs[0]) {
       const {userId, ...restData} = userStats.docs[0].data()
       setStats({...restData})
