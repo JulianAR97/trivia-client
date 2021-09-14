@@ -24,8 +24,6 @@ const useStyles = makeStyles((theme) => ({
 
 }))
 
-// get stats,
-// find or update stats
 
 const Final = (props) => {
   const classes = useStyles()
@@ -56,7 +54,6 @@ const Final = (props) => {
       return result
     } else {
       // create doc
-      console.log('here')
       const result = await database.stats.add({
         userId: currentUser.uid,
         totalQuestionCorrect: props.score,
