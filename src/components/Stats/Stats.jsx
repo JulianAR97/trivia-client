@@ -42,12 +42,14 @@ const Stats = (props) => {
     setErrors([])
     setLoading(true)
 
-    if (currentUser?.uid) {
+    if (currentUser?.uid)
       getStats(currentUser.uid)
-    } else {
+    else 
       setErrors(prevErrors => [...prevErrors, 'Please login to view stats'])
-    }
+    
+    
     setLoading(false)
+  
   }, [currentUser])
 
   const renderErrors = (errors) => {
