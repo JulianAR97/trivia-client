@@ -7,6 +7,11 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     cursor: 'pointer',
     padding: '10px',
+    '&:hover': {
+      // 7px 7px defines thickness of shadow, 5px defines blur
+      boxShadow: `7px 7px 5px ${theme.palette.grey[400]}`,
+      transition: 'box-shadow 0.5s ease'
+    }
     
   },
 
@@ -20,7 +25,8 @@ const Answer = (props) => {
   const classes = useStyles()
   return (
     <Grid 
-      item 
+      item
+      className={classes.gridItem} 
       xs={12} 
       md={6}
     >
