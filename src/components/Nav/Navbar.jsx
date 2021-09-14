@@ -1,5 +1,6 @@
-import React from 'react'
-import { AppBar, Button, IconButton, Toolbar, Typography, makeStyles } from '@material-ui/core'
+import React, { useEffect, useState } from 'react'
+import { AppBar, Avatar, Button, IconButton, Toolbar, Typography, makeStyles } from '@material-ui/core'
+import { getProfile } from 'actions/Profile'
 import { Menu as MenuIcon} from '@material-ui/icons'
 import { useAuth } from 'contexts/AuthContext'
 import { useHistory } from 'react-router-dom'
@@ -22,9 +23,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = (props) => {
   const classes = useStyles()
+  const [avatar, setAvatar] = useState('')
   const { currentUser, logout } = useAuth()
   const history = useHistory()
-
+  
   const handleAuthButton = async(e) => {
     if (currentUser) {
       await logout()
@@ -34,6 +36,17 @@ const Navbar = (props) => {
     }
   }
 
+  useEffect(() => {
+    if (currentUser) {
+      getProfile(currentUser)
+        .then(profile => profile.docs[0].data())
+        .then(profile => setAvatar(profile.avatar))
+    } else {
+      setAvatar('')
+    }
+
+  }, [currentUser] )
+
   const handleLogoClick = (e) => {
     if (history.location.pathname === '/') {
       window.location.reload()
@@ -41,6 +54,11 @@ const Navbar = (props) => {
       history.push('/')
     }
   }
+
+  useEffect(() => {
+
+  })
+
 
   return (
     <AppBar position="static">
@@ -51,6 +69,9 @@ const Navbar = (props) => {
         <Typography variant="h6" className={classes.title} onClick={handleLogoClick}>
           Trivia
         </Typography>
+      
+        {currentUser ? <Avatar src={avatar} /> : null }
+      
         <Button onClick={handleAuthButton}>
           <Typography variant="subtitle2" className={classes.title}>
             {currentUser ? 'logout' : 'login'}
