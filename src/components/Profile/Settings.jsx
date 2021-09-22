@@ -1,10 +1,19 @@
 import React from 'react'
+import { Box, makeStyles } from '@material-ui/core'
+
+const useStyles = makeStyles(theme => ({
+  box: {
+    marginTop: '20px'
+  }
+}))
 
 const Settings = () => {
+  const classes = useStyles()
+  
   return (
-    <div>
+    <Box className={classes.box}>
       Settings
-    </div>
+    </Box>
   )
 }
 

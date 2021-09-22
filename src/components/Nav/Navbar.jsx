@@ -70,6 +70,7 @@ const Navbar = (props) => {
   }
 
   const handleProfileClick = (e) => {
+    setAnchorEl(null)
     history.push('/profile')
   }
 
